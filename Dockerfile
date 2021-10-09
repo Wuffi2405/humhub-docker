@@ -137,6 +137,12 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod 600 /etc/crontabs/nginx && \
     chmod +x /docker-entrypoint.sh
 
+USER nginx
+WORKDIR /var/www/localhost/htdocs/protected
+RUN php yii module/install polls ;\
+    php yii module/install wiki ;\
+    php yii module/install calendar
+
 VOLUME /var/www/localhost/htdocs/uploads
 VOLUME /var/www/localhost/htdocs/protected/config
 VOLUME /var/www/localhost/htdocs/protected/modules
